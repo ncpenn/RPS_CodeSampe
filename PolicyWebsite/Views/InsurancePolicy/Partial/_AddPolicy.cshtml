@@ -1,0 +1,94 @@
+﻿@model Website.PolicyWebsite.Models.AddPolicy
+
+<div id="validationError"></div>
+
+@using (Html.BeginForm("add", "InsurancePolicy", FormMethod.Post, new { Id = "addPolicyForm" }))
+{
+    <div>
+        <div class="form-group row">
+            <div class="col-xs-12">
+                <h4>Policy Info</h4>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-xs-4">
+                @Html.EditorFor(model => model.PolicyNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Policy Number", onfocus = "(this.type='number')", onblur = "(this.type='text')" } })
+            </div>
+
+            <div class="col-xs-4">
+                @Html.EditorFor(model => model.EffectiveDate, new { htmlAttributes = new { @class = "form-control", placeholder = "Effective Date", onfocus = "(this.type='date')", onblur = "(this.type='text')" } })
+            </div>
+
+            <div class="col-xs-4">
+                @Html.EditorFor(model => model.ExpireDate, new { htmlAttributes = new { @class = "form-control", placeholder = "Expiry Date", onfocus = "(this.type='date')", onblur = "(this.type='text')" } })
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-xs-12">
+                <h4>Primary Insured</h4>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-xs-4">
+                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = "First Name" } })
+            </div>
+
+            <div class="col-xs-4">
+                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "Last Name" } })
+            </div>
+
+            <div class="col-xs-4">
+                @Html.EditorFor(model => model.Street, new { htmlAttributes = new { @class = "form-control", placeholder = "Street Address" } })
+            </div>
+
+            <div class="col-xs-4">
+                @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", placeholder = "City" } })
+            </div>
+
+            <div class="col-xs-4">
+                @Html.EditorFor(model => model.State, new { htmlAttributes = new { @class = "form-control", placeholder = "State" } })
+            </div>
+
+            <div class="col-xs-4">
+                @Html.EditorFor(model => model.Zip, new { htmlAttributes = new { @class = "form-control", placeholder = "Zip" } })
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-xs-12">
+                <h4>Insured Risk</h4>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-xs-4">
+                @Html.EditorFor(model => model.YearBuilt, new { htmlAttributes = new { id = "test", @class = "form-control", placeholder = "Year Built", onfocus = "(this.type='date')", onblur = "(this.type='text')" } })
+            </div>
+
+            <div class="col-xs-4">
+                @Html.EditorFor(model => model.BuildingStreet, new { htmlAttributes = new { @class = "form-control", placeholder = "Building Address" } })
+            </div>
+
+            <div class="col-xs-4">
+                @Html.EditorFor(model => model.BuildingCity, new { htmlAttributes = new { @class = "form-control", placeholder = "Building City" } })
+            </div>
+
+            <div class="col-xs-4">
+                @Html.EditorFor(model => model.BuildingState, new { htmlAttributes = new { @class = "form-control", placeholder = "Building State" } })
+            </div>
+
+            <div class="col-xs-4">
+                @Html.EditorFor(model => model.BuildingZip, new { htmlAttributes = new { @class = "form-control", placeholder = "Building Zip" } })
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-xs-4">
+                @Html.DropDownListFor(model => model.SelectedRiskConstruction, Model.RiskConstruction, new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+}

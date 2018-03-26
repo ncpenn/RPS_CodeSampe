@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0ad59633d2524504b9f36bc5068ec635" Name="Diagram1" >
+        <EntityTypeShape EntityType="PolicyDatabaseModel.Address" Width="1.5" PointX="0.75" PointY="3.375" />
+        <EntityTypeShape EntityType="PolicyDatabaseModel.ConstructionType" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="PolicyDatabaseModel.Policy" Width="1.5" PointX="5.25" PointY="5.125" />
+        <EntityTypeShape EntityType="PolicyDatabaseModel.PrimaryInsured" Width="1.5" PointX="3" PointY="6.5" />
+        <EntityTypeShape EntityType="PolicyDatabaseModel.RiskInsured" Width="1.5" PointX="3" PointY="3.375" />
+        <AssociationConnector Association="PolicyDatabaseModel.FK_PrimaryInsured_ToAddress" />
+        <AssociationConnector Association="PolicyDatabaseModel.FK_RiskInsured_Address" />
+        <AssociationConnector Association="PolicyDatabaseModel.FK_RiskInsured_ConstructionType" />
+        <AssociationConnector Association="PolicyDatabaseModel.FK_Policy_PrimaryInsured" />
+        <AssociationConnector Association="PolicyDatabaseModel.FK_Policy_RiskInsured" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
