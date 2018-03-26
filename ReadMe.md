@@ -5,10 +5,8 @@ To run it, you need to start both the web api service and the website. Right cli
 Notes:
 1. There is no paging on the list view because the story didn't call for it (in real life, I would have been talking to the BA about that)
 2. I set up a the website and api to use JWTs. Right now the secret is in the webconfig. In production, that would be in a TFS variable or some similar location and not exposed.
-     a. Also, if deployed, they should be only talking to each other over tls to prevent token interception. Additionally, the 
-     tokens generated are only good for 2 minutes to help prevent replay attacks.
-     b. Additionally, if I were setting this up for a real deploy, I'd only accept requests from the ip address of the website
-     to the api. https://docs.microsoft.com/en-us/iis/configuration/system.webserver/security/ipsecurity/
+3. Also, if deployed, they should be only talking to each other over tls to prevent token interception. Additionally, the tokens generated are only good for 2 minutes to help prevent replay attacks.
+4. Additionally, if I were setting this up for a real deploy, I'd only accept requests from the ip address of the website to the api. https://docs.microsoft.com/en-us/iis/configuration/system.webserver/security/ipsecurity/
 
 Go to Server Explorer and run this query to see data directly:
  
