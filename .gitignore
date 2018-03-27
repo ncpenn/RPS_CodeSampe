@@ -1,0 +1,11 @@
+.vs/
+packages/
+PolicyService/bin/
+PolicyService/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+PolicyService/obj/
+PolicyWebsite/bin/
+PolicyWebsite/obj/
+Service.PolicyService.Tests/bin/
+Service.PolicyService.Tests/obj/
+Website.PolicyWebsite.Tests/bin/
+Website.PolicyWebsite.Tests/obj/
