@@ -20,84 +20,66 @@
         BuildingZip: null
     };
 
+    function removeHash() {
+        window.location.replace("#");
+    }
+
     $("#addPolicyFormModal").dialog({
         autoOpen: false,
         modal: true,
-        width: 650,
-        height: 600,
+        width: 700,
+        height: 420,
+        position: { my: "left top", at: "left bottom", of: $('#addBtn') },
         open: function (event, ui) {
             $('#addPolicyFormModal').css('overflow', 'hidden');
         },
+        close: removeHash,
         show: {
             effect: "blind",
             duration: 1000
-        },
-        buttons: [
-            {
-                id: "cancelAddBtn",
-                text: "Cancel",
-                click: function () {
-                    $('#addPolicyFormModal').dialog('close');
-                }
-            },
-            {
-                id: "submitAddBtn",
-                text: "Submit",
-                click: addPolicy
-            }
-        ]
+        }
     });
 
-    function addPolicy() {
-        $("#cancelAddBtn").button("disable");
-        $("#submitAddBtn").button("disable");
+    function addPolicy(e) {
+        e.preventDefault();
+        removeHash();
+        $(".sw-btn-next").button("disable");
+        $(".sw-btn-prev").button("disable");
 
         var $formFields = $(":text");
-        var valid = true;
 
         model.SelectedRiskConstruction = $("#SelectedRiskConstruction option:selected").val();
+        model.EffectiveDate = $("#start_date").val();
+        model.ExpireDate = $("#end_date").val();
+        model.YearBuilt = $("#year_built").val();
 
         $.each($formFields, function (_, item) {
             model[item.name] = item.value;
-
-            var itemValid = validate($(item));
-            valid = valid && itemValid;
-
-            if (!itemValid) {
-                $(item).addClass("ui-state-error");
-            } else {
-                $(item).removeClass("ui-state-error");
-            }
         });
 
-        if (valid) {
-            $.ajax(
-                {
-                    url: rootUrl + '/InsurancePolicy/Add',
-                    type: "POST",
-                    data: JSON.stringify(model),
-                    processData: false,
-                    contentType: "application/json",
-                    success: function (data, textStatus, jqXHR) {
-                        var result = JSON.parse(data);
-                        if (result.HasError) {
-                            handleError(result.ErrorMessage);
-                        } else {
-                            $('#addPolicyFormModal').dialog('close');
-                            location.reload();
-                        }
-
-                        enableFormButtons();
-                    },
-                    error: function (jqXHR, error) {
-                        handleError(jqXHR.status, jqXHR.responseText);
-                        enableFormButtons();
-                    }
-                });
-        } else {
-            enableFormButtons();
-        }
-        return valid;
+       
+    $.ajax(
+        {
+            url: rootUrl + '/InsurancePolicy/Add',
+            type: "POST",
+            data: JSON.stringify(model),
+            processData: false,
+            contentType: "application/json",
+            success: function (data, textStatus, jqXHR) {
+                var result = JSON.parse(data);
+                if (result.HasError) {
+                    handleError(result.ErrorMessage);
+                } else {
+                    $('#addPolicyFormModal').dialog('close');
+                    location.reload();
+                }
+                enableFormButtons();
+            },
+            error: function (jqXHR, error) {
+                handleError(jqXHR.status, jqXHR.responseText);
+                enableFormButtons();
+            }
+        });
     }
 
     function handleError(incoming, errorMessage) {
@@ -119,17 +101,39 @@
     }
 
     function enableFormButtons() {
-        $("#cancelAddBtn").button("enable");
-        $("#submitAddBtn").button("enable");
+        $(".sw-btn-next").button("enable");
+        $(".sw-btn-prev").button("enable");
     }
 
-    function validate(selector) {
-        if (selector.val() < 1) {
-            selector.addClass("ui-state-error");
-            return false;
-        } else {
-            return true;
+    function validateStep(e, anchorObject, stepNumber, stepDirection) {
+        var valid = true;
+
+        if (stepDirection === "forward") {
+            $(":text:visible").is(function () {
+                if ($(this).val().length < 1) {
+                    $(this).addClass("ui-state-error");
+                    valid = false;
+                } else {
+                    $(this).removeClass("ui-state-error");
+                }
+            });
         }
+
+        if (valid && stepDirection === "forward" && stepNumber === 3) {
+            var $button = $('.sw-btn-next');
+            $button.html("Save")
+            $button.button("enable");
+            $button.addClass("btn-success");
+            $button.on('click', addPolicy)
+        } else {
+            var $button = $('.sw-btn-next');
+            $button.html("Save")
+            $button.removeClass("btn-success");
+            $button.html("Next")
+            $button.off('click', addPolicy )
+        }
+
+        return valid;
     }
 
     $("#addBtn").on("click", function (e) {
@@ -137,12 +141,31 @@
         e.preventDefault();
 
         $("#addPolicyFormModal").html("");
-
-        $("#addPolicyFormModal").dialog("option", "title", "Loading...").dialog("open");
-
+        
+        $("#addPolicyFormModal").dialog().dialog("open");
+        $("#addPolicyFormModal").dialog("option", "title", "Loading...");
         $("#addPolicyFormModal").load(rootUrl + '/insurancepolicy/add', function () {
-            $("#addPolicyFormModal").dialog("option", "title", "Add a policy");
-            $("#SelectedRiskConstruction").selectmenu();
+            $("#addPolicyFormModal").dialog("option", "title", "");
+            $('#smartwizard').smartWizard({
+                autoAdjustHeight: false
+            });
+
+            $(".ui-dialog-titlebar-close").html("X");
+
+            $("#smartwizard").on("leaveStep", validateStep);
+
+            $("#year_built").datepicker({
+                changeMonth: true,
+                changeYear: true
+            });
+            $("#start_date").datepicker({
+                changeMonth: true,
+                changeYear: true
+            });
+            $("#end_date").datepicker({
+                changeMonth: true,
+                changeYear: true
+            });
         });
 
     });

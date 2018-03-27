@@ -35,7 +35,7 @@ namespace Website.PolicyWebsite.Models
         [Display(Name = "Street Address")]
         public string Street { get; set; }
 
-        [Display(Name = "Last Name")]
+        [Display(Name = "City")]
         public string City { get; set; }
 
         [Display(Name = "City")]
