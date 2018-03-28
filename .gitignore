@@ -1,7 +1,6 @@
 .vs/
 packages/
 PolicyService/bin/
-PolicyService/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
 PolicyService/obj/
 PolicyWebsite/bin/
 PolicyWebsite/obj/
